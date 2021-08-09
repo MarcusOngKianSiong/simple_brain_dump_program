@@ -14,3 +14,8 @@ What do I need:
     4. Display
 
 '''
+
+
+Step 1: Acquire all relevant inputs and perform the necessary checks on the inputs              - Checking of one value requires one to look into memory
+
+
