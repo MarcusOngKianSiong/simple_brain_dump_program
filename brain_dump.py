@@ -1,5 +1,7 @@
 import json
-#STEP 1
+
+
+# TOOLS TO GATHER INPUTS
 # Make sure that initial input only contains 1,2,3, or 4
 def get_correct_initial_input():
     user_input = 20
@@ -21,11 +23,15 @@ def get_new_commet():
     new_comment = input("Write new comment: ")
     return new_comment
 
-# Obtain the index of the comment to delete (INCOMPLETE!!!!! CHECK IF THE INDEX EXIST)
-def comment_to_delete():
+# Obtain the existing index of the comment to delete  (INCOMPLETE!!!!! CHECK IF THE INDEX EXIST)
+def comment_to_delete(processing_object):
 
-    index = input("comment's index: ")
-    return index
+    while True:
+        index = int(input("comment's index: "))
+        if processing_object.existence_of_comment_by_Index(index):
+            return index
+        else:
+            print("\nError: Index does not exist. Please try again.\n")
 
 # Organize the inputs into an array (e.g. [1,"something here"]) to be processed
 def prepare_user_inputs():
@@ -53,14 +59,12 @@ def prepare_user_inputs():
 
     return prepared_user_input
 
-
-
-
-# STEP 2
+# TOOLS TO PROCESS INPUTS
 class processing:
     def __init__(self,user_inputs):
         self.user_inputs = user_inputs
 
+# Functions that represents user control
     def display_comments(self):
         with open("storage.json") as file:
             comments = json.load(file)
@@ -120,4 +124,20 @@ class processing:
         if self.user_inputs[0] == 4:
             exit()
 
-x = processing([3])
+# Functions that assist in operations
+    def existence_of_comment_by_Index(self,index):
+        try:
+            comments = []
+
+            with open("storage.json",'r') as file:
+                comments = json.load(file)
+
+            comments[index-1]
+
+        except:
+            return False
+        else:
+            return True
+
+x = processing([2,2])
+print(comment_to_delete(x))
