@@ -16,8 +16,6 @@ def get_correct_initial_input(memory):
             if user_input not in [1,2,3,4]:
                 print("\n----------Error: Invalid input----------\n")
                 continue
-            
-            
 
         return user_input
 
