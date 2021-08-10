@@ -144,5 +144,12 @@ class processing:
 memory = processing([])
 while True:
     memory.display_comments()
-    print(prepare_user_inputs(memory))
-    exit()
+    memory.user_inputs = prepare_user_inputs(memory)
+    if memory.user_inputs[0] == 4:
+        memory.exit_program()
+    elif memory.user_inputs[0] == 3:
+        memory.delete_all()
+    elif memory.user_inputs[0] == 2:
+        memory.remove_a_comment()
+    elif memory.user_inputs[0] == 1:
+        memory.append()
