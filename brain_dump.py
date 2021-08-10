@@ -1,20 +1,23 @@
 import json
-
-
 # TOOLS TO GATHER INPUTS
 # Make sure that initial input only contains 1,2,3, or 4
-def get_correct_initial_input():
+def get_correct_initial_input(memory):
     user_input = 20
     while user_input not in [1,2,3,4]:
         try:
             user_input = int(input("What would you like to do?\n1. Append\n2. Delete item\n3. Clear all\n4. Exit program\nInput: """))
+            if (user_input == 2 or user_input == 3) and memory.number_of_comments() == 0:
+                print("\n----------Error: Zero comments----------\n")
+                continue
         except:
-            print("\nInvalid input\n")
+            print("\n----------Error: Invalid input----------\n")
             continue
         else:
             if user_input not in [1,2,3,4]:
-                print("\nInvalid input\n")
+                print("\n----------Error: Invalid input----------\n")
                 continue
+            
+            
 
         return user_input
 
@@ -28,11 +31,15 @@ def comment_to_delete(processing_object):
 
     while True:
         # ADDITIONAL CONSIDERATION: ANY INPUT THAT IS NOT A NUMBER -> SOLUTION: USE TRY EXCEPT ELSE BLOCK AS ANY INPUT THAT IS NOT A NUMBER WILL GIVE AN ERROR DUE TO int()
-        index = int(input("comment's index: "))
-        if processing_object.existence_of_comment_by_Index(index):
-            return index
+        try:
+            index = int(input("comment's index: "))
+        except:
+            print("\n----------Error: Invalid input----------\n")
         else:
-            print("\nError: Index does not exist. Please try again.\n")
+            if processing_object.existence_of_comment_by_Index(index):
+                return index
+            else:
+                print("\n----------Error: Index does not exist. Please try again.----------\n")
 
 # Organize the inputs into an array (e.g. [1,"something here"]) to be processed
 def prepare_user_inputs(memory):
@@ -40,7 +47,7 @@ def prepare_user_inputs(memory):
     # Hold two 
     prepared_user_input = []
 
-    prepared_user_input.append(get_correct_initial_input()) 
+    prepared_user_input.append(get_correct_initial_input(memory)) 
 
     if prepared_user_input[0] in [1,2]:
 
@@ -111,7 +118,7 @@ class processing:
             return True
 
         else:
-            
+
             return False
 
     def exit_program(self):
@@ -119,6 +126,12 @@ class processing:
             exit()
 
 # Functions that assist in operations
+
+    def number_of_comments(self):
+        with open("storage.json",'r') as file:
+            comments = json.load(file)
+            return len(comments)
+
     def existence_of_comment_by_Index(self,index):
 
         try:
@@ -132,14 +145,15 @@ class processing:
         except:
             return False
         else:
-
             return True
 
     def display_comments(self):
         with open("storage.json") as file:
             comments = json.load(file)
+            print("\n-----------------Comments---------------------")
             for index,comment in enumerate(comments):
                 print(f"{index+1}: {comment}")
+            print("----------------------------------------------\n")
 
 memory = processing([])
 while True:

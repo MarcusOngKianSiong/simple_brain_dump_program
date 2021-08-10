@@ -25,3 +25,9 @@ Step 4: Ensure that input gathering component is working perfectly:
     - gathering additional inputs based on the initial inputs, 
     - and produce an output that is given to the processing component.
 Step 5: Ensure changes are being implemented to the data (storage.json) such that it reflects the initial input.
+Step 6: Step 6: Refine the display and correct errors
+    Errors:
+    - Delete item: If there is nothing there, then it will be stuck in a loop
+        - Put the logic into the first initial input check.
+    - Delete item: Input that is not a number
+        - Put the logic into the comment_to_delete function.
