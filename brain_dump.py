@@ -27,6 +27,7 @@ def get_new_commet():
 def comment_to_delete(processing_object):
 
     while True:
+        # ADDITIONAL CONSIDERATION: ANY INPUT THAT IS NOT A NUMBER -> SOLUTION: USE TRY EXCEPT ELSE BLOCK AS ANY INPUT THAT IS NOT A NUMBER WILL GIVE AN ERROR DUE TO int()
         index = int(input("comment's index: "))
         if processing_object.existence_of_comment_by_Index(index):
             return index
@@ -34,7 +35,7 @@ def comment_to_delete(processing_object):
             print("\nError: Index does not exist. Please try again.\n")
 
 # Organize the inputs into an array (e.g. [1,"something here"]) to be processed
-def prepare_user_inputs():
+def prepare_user_inputs(memory):
 
     # Hold two 
     prepared_user_input = []
@@ -44,18 +45,16 @@ def prepare_user_inputs():
     if prepared_user_input[0] in [1,2]:
 
         # Deleting a single comment using it's index (2)
-        if prepared_user_input[0] == 2:                          
-            index_to_delete = comment_to_delete()                   
-            print("Delete a single comment!!!!")
+        if prepared_user_input[0] == 2:
+                     
+            index_to_delete = comment_to_delete(memory)                   
+            prepared_user_input.append(index_to_delete)
 
         # Appending new comment (1)    
         else:
             # Append value....
             new_comment = get_new_commet()
             prepared_user_input.append(new_comment)
-
-    else:
-        print("Unknown error")
 
     return prepared_user_input
 
@@ -64,12 +63,7 @@ class processing:
     def __init__(self,user_inputs):
         self.user_inputs = user_inputs
 
-# Functions that represents user control
-    def display_comments(self):
-        with open("storage.json") as file:
-            comments = json.load(file)
-            for index,comment in enumerate(comments):
-                print(f"{index+1}: {comment}")
+# Functions that represents processing of user inputs
 
     def append(self):
         
@@ -126,6 +120,7 @@ class processing:
 
 # Functions that assist in operations
     def existence_of_comment_by_Index(self,index):
+
         try:
             comments = []
 
@@ -137,7 +132,17 @@ class processing:
         except:
             return False
         else:
+
             return True
 
-x = processing([2,2])
-print(comment_to_delete(x))
+    def display_comments(self):
+        with open("storage.json") as file:
+            comments = json.load(file)
+            for index,comment in enumerate(comments):
+                print(f"{index+1}: {comment}")
+
+memory = processing([])
+while True:
+    memory.display_comments()
+    print(prepare_user_inputs(memory))
+    exit()
