@@ -17,5 +17,5 @@ What do I need:
 
 
 Step 1: Acquire all relevant inputs and perform the necessary checks on the inputs              - Checking of one value requires one to look into memory
-
+Step 2: Create the statements that processes the inputs from step 1 (processing all four initial inputs)                            
 
